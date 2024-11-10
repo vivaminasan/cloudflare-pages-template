@@ -1,6 +1,33 @@
-# Reference: https://developers.cloudflare.com/pages/platform/headers/#prevent-your-pagesdev-deployments-showing-in-search-results
-https://:project.pages.dev/*
-  X-Robots-Tag: noindex
-  
-https://:project.pages.dev/*
-  Access-Control-Allow-Origin: https://staging.:project.pages.dev
+# Global headers for the entire site
+/*
+  Cache-Control: public, max-age=86400
+  Content-Security-Policy: default-src 'self'; img-src 'self' data:; script-src 'self'; style-src 'self' 'unsafe-inline'; connect-src 'self'; font-src 'self'; frame-src 'none'; base-uri 'self'; form-action 'self'
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: SAMEORIGIN
+  X-XSS-Protection: 1; mode=block
+  Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
+  Referrer-Policy: no-referrer-when-downgrade
+  Permissions-Policy: geolocation=(self), microphone=()
+  Feature-Policy: accelerometer 'none'; autoplay 'none'; encrypted-media 'none'; fullscreen 'none'; geolocation 'none'; microphone 'none'; midi 'none'; payment 'none'; picture-in-picture 'none'; sync-xhr 'none'; vibrate 'none'; xr-spatial-tracking 'none'
+  Pragma: no-cache
+  Expires: 0
+
+# Headers for specific paths (e.g., admin or login pages)
+/admin/*
+  Cache-Control: no-store
+  X-Frame-Options: DENY
+
+# Headers for API endpoints (e.g., if you have an /api path)
+*/api/*
+  Access-Control-Allow-Origin: *
+  Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS
+  Access-Control-Allow-Headers: Content-Type, Authorization
+  Cache-Control: no-cache, no-store, must-revalidate
+
+# Headers for images (for caching and optimization)
+*.jpg, *.jpeg, *.png, *.gif, *.svg
+  Cache-Control: public, max-age=31536000, immutable
+
+# Headers for JavaScript and CSS files (for long-term caching)
+*.js, *.css
+  Cache-Control: public, max-age=31536000, immutable
