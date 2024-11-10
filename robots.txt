@@ -1,5 +1,27 @@
-# Reference: https://developers.cloudflare.com/fundamentals/get-started/reference/cdn-cgi-endpoint/#disallow-using-robotstxt
-User-agent: *
-Disallow: /cdn-cgi/
+# Sample robots.txt for Zyqup website
 
-Sitemap: https://example.com/sitemap.xml
+# Allow all robots complete access
+User-agent: *
+Disallow: /admin/
+Disallow: /login/
+Disallow: /private/
+
+# Allow Googlebot access to everything
+User-agent: Googlebot
+Disallow:
+
+# Disallow all crawlers from accessing certain files
+User-agent: *
+Disallow: /cgi-bin/
+Disallow: /tmp/
+Disallow: /junk/
+
+# Sitemap location (helps search engines discover your sitemap)
+Sitemap: https://www.zyqup.com/sitemap.xml
+
+# Block specific bots if needed (e.g., bad bots)
+User-agent: BadBot
+Disallow: /
+
+# Delay crawl (optional, to avoid server overload)
+Crawl-delay: 10
